@@ -1,0 +1,55 @@
+const sideMenu = document.querySelector("aside");
+const menuBtn = document.querySelector("#menu-btn");
+const closeBtn = document.querySelector("#close-btn");
+const themeToggeler = document.querySelector(".theme-toggler");
+const changeLogoColor = document.querySelector(".change-logo-color");
+const changeSloganColor = document.querySelector(".change-slogan-color");
+
+menuBtn.addEventListener("click", () => {
+  sideMenu.style.display = "block";
+});
+closeBtn.addEventListener("click", () => {
+  sideMenu.style.display = "none";
+});
+
+themeToggeler.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme-variables");
+  themeToggeler.querySelector("span:nth-child(1)").classList.toggle("active");
+  themeToggeler.querySelector("span:nth-child(2)").classList.toggle("active");
+  if (
+    themeToggeler
+      .querySelector("span:nth-child(1)")
+      .classList.contains("active")
+  ) {
+    changeLogoColor.setAttribute("fill", "#111111");
+    changeSloganColor.setAttribute("fill", "#2b3595");
+  }
+  if (
+    themeToggeler
+      .querySelector("span:nth-child(2)")
+      .classList.contains("active")
+  ) {
+    changeLogoColor.setAttribute("fill", "#ffffff");
+    changeSloganColor.setAttribute("fill", "#00E5FF");
+  }
+});
+
+orders.forEach((order) => {
+  const tr = document.createElement("tr");
+  const trContent = `<tr>
+                <td>${order.productName}</td>
+                <td>${order.productNumber}</td>
+                <td>${order.paymentStatus}</td>
+                <td class="${
+                  order.shipping === "Declined"
+                    ? "danger"
+                    : order.shipping === "Pending"
+                    ? "warning"
+                    : "success"
+                }">${order.shipping}</td>
+                <td class="primary">Details</td>
+              </tr>`;
+
+  tr.innerHTML = trContent;
+  document.querySelector("table tbody").appendChild(tr);
+});
