@@ -10,7 +10,7 @@ const initialData = {
       role: "Super Admin",
       phone: "+1 (555) 019-2831",
       designation: "Chief Operating Officer",
-      avatar: "images/image2.png",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=250&q=80",
       bio: "Lead Operations Director overseeing global store fulfillment, order processing, and customer success management."
     },
     {
@@ -21,7 +21,7 @@ const initialData = {
       role: "Store Manager",
       phone: "+1 (555) 234-5678",
       designation: "Retail Operations Manager",
-      avatar: "images/image1.png",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
       bio: "Managing retail store fulfillment and inventory distribution."
     },
     {
@@ -32,7 +32,7 @@ const initialData = {
       role: "Analytics Lead",
       phone: "+49 30 9876543",
       designation: "Data & Revenue Lead",
-      avatar: "images/image4.png",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=250&q=80",
       bio: "Overseeing data modeling and European enterprise sales performance."
     }
   ],
@@ -168,7 +168,7 @@ const initialData = {
       stock: 45,
       rating: 4.8,
       status: "In Stock",
-      image: "images/image1.png",
+      image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=600&q=80",
       description: "Ultra-portable foldable drone with 4K UHD camera, 30 mins flight time, and optical flow positioning."
     },
     {
@@ -180,7 +180,7 @@ const initialData = {
       stock: 12,
       rating: 4.5,
       status: "Low Stock",
-      image: "images/image4.png",
+      image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80",
       description: "Professional 2-axis anti-shake gimbal GPS drone with 25-minute high capacity battery."
     },
     {
@@ -192,7 +192,7 @@ const initialData = {
       stock: 28,
       rating: 4.9,
       status: "In Stock",
-      image: "images/image3.png",
+      image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=600&q=80",
       description: "High-end quadcopter with level-7 wind resistance and transmission distance up to 3000 meters."
     },
     {
@@ -204,7 +204,7 @@ const initialData = {
       stock: 8,
       rating: 5.0,
       status: "Low Stock",
-      image: "images/image2.png",
+      image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?auto=format&fit=crop&w=600&q=80",
       description: "1-inch CMOS sensor, 5.4K video capability, MasterShots, and APAS 4.0 safety system."
     },
     {
@@ -216,7 +216,7 @@ const initialData = {
       stock: 0,
       rating: 4.2,
       status: "Out of Stock",
-      image: "images/image1.png",
+      image: "https://images.unsplash.com/photo-1521405916894-6e6900f68e0d?auto=format&fit=crop&w=600&q=80",
       description: "Beginner-friendly compact drone featuring optical flow positioning and HD gesture camera."
     },
     {
@@ -228,7 +228,7 @@ const initialData = {
       stock: 34,
       rating: 4.7,
       status: "In Stock",
-      image: "images/image4.png",
+      image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80",
       description: "Dual 4K wide-angle cameras with brushless motors and smart return-to-home functionality."
     },
     {
@@ -240,7 +240,7 @@ const initialData = {
       stock: 110,
       rating: 4.9,
       status: "In Stock",
-      image: "images/image3.png",
+      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=600&q=80",
       description: "Intelligent lipo battery with status LEDs and overcharge protection built-in."
     },
     {
@@ -252,7 +252,7 @@ const initialData = {
       stock: 40,
       rating: 4.6,
       status: "In Stock",
-      image: "images/image2.png",
+      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
       description: "Replacement 3-axis mechanical gimbal camera module compatible with all FPV models."
     },
     {
@@ -264,7 +264,7 @@ const initialData = {
       stock: 15,
       rating: 4.9,
       status: "In Stock",
-      image: "images/image1.png",
+      image: "https://images.unsplash.com/photo-1506947411487-a56738267384?auto=format&fit=crop&w=600&q=80",
       description: "Carbon fiber FPV racing drone with zero latency transmission and 120km/h top speed."
     },
     {
@@ -276,7 +276,7 @@ const initialData = {
       stock: 85,
       rating: 4.7,
       status: "In Stock",
-      image: "images/image4.png",
+      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
       description: "Omnidirectional high gain antenna set for extended flight range and interference resistance."
     }
   ],
@@ -291,7 +291,7 @@ const initialData = {
       spent: 3450,
       status: "Active",
       vipTier: "Platinum",
-      image: "images/image1.png",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-01-15"
     },
     {
@@ -304,7 +304,7 @@ const initialData = {
       spent: 2100,
       status: "Active",
       vipTier: "Gold",
-      image: "images/image4.png",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-02-20"
     },
     {
@@ -317,7 +317,7 @@ const initialData = {
       spent: 1250,
       status: "Active",
       vipTier: "Silver",
-      image: "images/image3.png",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-03-10"
     },
     {
@@ -330,7 +330,7 @@ const initialData = {
       spent: 4890,
       status: "Active",
       vipTier: "Platinum",
-      image: "images/image2.png",
+      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2023-11-05"
     },
     {
@@ -343,7 +343,7 @@ const initialData = {
       spent: 680,
       status: "Inactive",
       vipTier: "Bronze",
-      image: "images/image1.png",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-04-18"
     },
     {
@@ -356,7 +356,7 @@ const initialData = {
       spent: 7120,
       status: "Active",
       vipTier: "Diamond",
-      image: "images/image4.png",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2023-08-14"
     },
     {
@@ -369,7 +369,7 @@ const initialData = {
       spent: 1498,
       status: "Active",
       vipTier: "Silver",
-      image: "images/image2.png",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-05-01"
     },
     {
@@ -382,7 +382,7 @@ const initialData = {
       spent: 1899,
       status: "Active",
       vipTier: "Gold",
-      image: "images/image3.png",
+      image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=250&q=80",
       joinedDate: "2024-06-12"
     }
   ],
@@ -391,7 +391,7 @@ const initialData = {
       id: "MSG-1",
       sender: "Mike Tyson",
       email: "mike.tyson@ironmike.com",
-      avatar: "images/image1.png",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
       subject: "Order Shipping Inquiry (#85631)",
       preview: "Hey John, when will the Foldable mini drone be dispatched? I need it before Friday!",
       body: "Hi John,\n\nI just placed an order (#85631) for the Foldable Mini Drone yesterday. Could you let me know if it has been dispatched yet? I have an event this coming Friday and really need it delivered by then.\n\nThanks,\nMike Tyson",
@@ -404,7 +404,7 @@ const initialData = {
       id: "MSG-2",
       sender: "Jos Butler",
       email: "jos.butler@cricket.uk",
-      avatar: "images/image4.png",
+      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=250&q=80",
       subject: "Feedback on Lazenge Drone",
       preview: "Received the Lazenge Drone package today. Quality is superb!",
       body: "Hello Admin,\n\nJust wanted to reach out and say thank you! I received my Lazenge Drone today in perfect condition. The packaging and build quality are top-notch.\n\nCheers,\nJos Butler",
@@ -417,7 +417,7 @@ const initialData = {
       id: "MSG-3",
       sender: "David Warner",
       email: "david.warner@aussie.au",
-      avatar: "images/image3.png",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=250&q=80",
       subject: "Refund Request Status (#36378)",
       preview: "Inquiring about refund status for order #36378.",
       body: "Hi Support team,\n\nI saw that order #36378 status was updated to Refunded. Could you confirm how many business days it usually takes to reflect in my bank account?\n\nBest regards,\nDavid Warner",
@@ -430,7 +430,7 @@ const initialData = {
       id: "MSG-4",
       sender: "Sarah Connor",
       email: "sarah@skynet-defense.com",
-      avatar: "images/image1.png",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=250&q=80",
       subject: "Bulk Order Inquiry for Batteries",
       preview: "Do you supply bulk orders for flight batteries?",
       body: "Hello,\n\nWe are looking to purchase 50 units of the Smart Flight Battery Pro for commercial operations. Do you offer bulk discounts?\n\nThanks,\nSarah",
@@ -443,7 +443,7 @@ const initialData = {
       id: "MSG-5",
       sender: "Elena Rostova",
       email: "elena.rostova@tech.de",
-      avatar: "images/image4.png",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=250&q=80",
       subject: "Wholesale Partnership Inquiry",
       preview: "Would like to discuss distribution partnership in Europe.",
       body: "Dear John,\n\nOur distribution agency in Berlin is interested in becoming an authorized regional reseller for your FPV Quadcopter models across Germany and Austria.\n\nLet's schedule a call.\n\nBest regards,\nElena Rostova",
@@ -456,7 +456,7 @@ const initialData = {
       id: "MSG-6",
       sender: "System Engine",
       email: "system@admindash.io",
-      avatar: "images/image2.png",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=250&q=80",
       subject: "Weekly Performance Report Ready",
       preview: "Weekly sales performance & inventory report generated.",
       body: "Automated System Broadcast:\n\nYour store analytics report for August 2026 is ready for review and download under the Reports tab.\n\nBest regards,\nAdmin Dashboard Server",
@@ -508,28 +508,28 @@ const initialData = {
     {
       id: "UPD-1",
       name: "Mike Tyson",
-      avatar: "images/image1.png",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
       action: "received his order of Night lion tech GPS drone",
       time: "2 min ago"
     },
     {
       id: "UPD-2",
       name: "Jos Butler",
-      avatar: "images/image4.png",
+      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=250&q=80",
       action: "received his order of Lazenge Drone",
       time: "12 min ago"
     },
     {
       id: "UPD-3",
       name: "David Warner",
-      avatar: "images/image3.png",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=250&q=80",
       action: "received his order of LARVENDER KF102 Drone",
       time: "20 min ago"
     },
     {
       id: "UPD-4",
       name: "Elena Rostova",
-      avatar: "images/image4.png",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=250&q=80",
       action: "submitted a 5-star review for Smart Flight Battery Pro",
       time: "1 hour ago"
     }
@@ -553,31 +553,31 @@ const initialData = {
 };
 
 function getStore() {
-  const data = localStorage.getItem("admin_dashboard_store_v3");
+  const data = localStorage.getItem("admin_dashboard_store_v4");
   if (!data) {
-    localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(initialData));
+    localStorage.setItem("admin_dashboard_store_v4", JSON.stringify(initialData));
     return JSON.parse(JSON.stringify(initialData));
   }
   try {
     const storeObj = JSON.parse(data);
     if (!storeObj.users) {
       storeObj.users = initialData.users;
-      localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(storeObj));
+      localStorage.setItem("admin_dashboard_store_v4", JSON.stringify(storeObj));
     }
     return storeObj;
   } catch (e) {
-    localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(initialData));
+    localStorage.setItem("admin_dashboard_store_v4", JSON.stringify(initialData));
     return JSON.parse(JSON.stringify(initialData));
   }
 }
 
 function saveStore(store) {
-  localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(store));
+  localStorage.setItem("admin_dashboard_store_v4", JSON.stringify(store));
 }
 
 // Authentication Session Helpers
 function getCurrentUser() {
-  const session = localStorage.getItem("admin_dashboard_session_v3");
+  const session = localStorage.getItem("admin_dashboard_session_v4");
   if (!session) return null;
   try {
     return JSON.parse(session);
@@ -587,11 +587,11 @@ function getCurrentUser() {
 }
 
 function setCurrentUser(user) {
-  localStorage.setItem("admin_dashboard_session_v3", JSON.stringify(user));
+  localStorage.setItem("admin_dashboard_session_v4", JSON.stringify(user));
 }
 
 function logoutUser() {
-  localStorage.removeItem("admin_dashboard_session_v3");
+  localStorage.removeItem("admin_dashboard_session_v4");
 }
 
 // Global scope initialization
