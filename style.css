@@ -1023,7 +1023,6 @@ body {
 }
 
 .search-input-box {
-  flex: 1;
   display: flex;
   align-items: center;
   background: var(--color-background);
@@ -1033,6 +1032,15 @@ body {
 
   & span { color: var(--color-info-dark); margin-right: 0.6rem; }
   & input { background: transparent; border: none; font-family: inherit; color: var(--color-dark); width: 100%; }
+}
+
+.filter-controls-flex .search-input-box {
+  flex: 1;
+}
+
+.inbox-sidebar .search-input-box {
+  flex: none;
+  width: 100%;
 }
 
 .filter-selects-wrap {
