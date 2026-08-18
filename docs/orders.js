@@ -1,6 +1,41 @@
 // Admin Dashboard Central Data Store & Persistence Manager
 
 const initialData = {
+  users: [
+    {
+      id: "USR-1",
+      fullName: "John Doe",
+      email: "john.admin@dashboard.com",
+      password: "password123",
+      role: "Super Admin",
+      phone: "+1 (555) 019-2831",
+      designation: "Chief Operating Officer",
+      avatar: "images/image2.png",
+      bio: "Lead Operations Director overseeing global store fulfillment, order processing, and customer success management."
+    },
+    {
+      id: "USR-2",
+      fullName: "Mike Tyson",
+      email: "mike.tyson@ironmike.com",
+      password: "password123",
+      role: "Store Manager",
+      phone: "+1 (555) 234-5678",
+      designation: "Retail Operations Manager",
+      avatar: "images/image1.png",
+      bio: "Managing retail store fulfillment and inventory distribution."
+    },
+    {
+      id: "USR-3",
+      fullName: "Elena Rostova",
+      email: "elena.rostova@tech.de",
+      password: "password123",
+      role: "Analytics Lead",
+      phone: "+49 30 9876543",
+      designation: "Data & Revenue Lead",
+      avatar: "images/image4.png",
+      bio: "Overseeing data modeling and European enterprise sales performance."
+    }
+  ],
   orders: [
     {
       id: "ORD-85631",
@@ -518,21 +553,45 @@ const initialData = {
 };
 
 function getStore() {
-  const data = localStorage.getItem("admin_dashboard_store_v2");
+  const data = localStorage.getItem("admin_dashboard_store_v3");
   if (!data) {
-    localStorage.setItem("admin_dashboard_store_v2", JSON.stringify(initialData));
+    localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(initialData));
     return JSON.parse(JSON.stringify(initialData));
   }
   try {
-    return JSON.parse(data);
+    const storeObj = JSON.parse(data);
+    if (!storeObj.users) {
+      storeObj.users = initialData.users;
+      localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(storeObj));
+    }
+    return storeObj;
   } catch (e) {
-    localStorage.setItem("admin_dashboard_store_v2", JSON.stringify(initialData));
+    localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(initialData));
     return JSON.parse(JSON.stringify(initialData));
   }
 }
 
 function saveStore(store) {
-  localStorage.setItem("admin_dashboard_store_v2", JSON.stringify(store));
+  localStorage.setItem("admin_dashboard_store_v3", JSON.stringify(store));
+}
+
+// Authentication Session Helpers
+function getCurrentUser() {
+  const session = localStorage.getItem("admin_dashboard_session_v3");
+  if (!session) return null;
+  try {
+    return JSON.parse(session);
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCurrentUser(user) {
+  localStorage.setItem("admin_dashboard_session_v3", JSON.stringify(user));
+}
+
+function logoutUser() {
+  localStorage.removeItem("admin_dashboard_session_v3");
 }
 
 // Global scope initialization
@@ -540,3 +599,6 @@ const currentStore = getStore();
 window.orders = currentStore.orders;
 window.getStore = getStore;
 window.saveStore = saveStore;
+window.getCurrentUser = getCurrentUser;
+window.setCurrentUser = setCurrentUser;
+window.logoutUser = logoutUser;

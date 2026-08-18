@@ -1,7 +1,9 @@
-// Admin Dashboard - Enterprise SPA Controller
+// Admin Dashboard - Enterprise SPA Controller with Multi-User Authentication
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM ELEMENT REFERENCES
+  const appLayout = document.getElementById("app-layout");
+  const viewAuth = document.getElementById("view-auth");
   const appSidebar = document.getElementById("app-sidebar");
   const menuBtn = document.getElementById("menu-btn");
   const closeBtn = document.getElementById("close-btn");
@@ -31,8 +33,149 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileTrigger = document.getElementById("profile-trigger");
   const profileDropdown = document.getElementById("profile-dropdown");
 
-  // Load Initial Store Data
+  // Load Initial Store & Active Session
   let store = window.getStore();
+  let currentUser = window.getCurrentUser();
+
+  // ----------------------------------------------------
+  // AUTHENTICATION & SESSION MANAGEMENT
+  // ----------------------------------------------------
+  function checkAuthSession() {
+    currentUser = window.getCurrentUser();
+    if (!currentUser) {
+      // User is logged out -> Show Auth View, Hide App Layout
+      if (appLayout) appLayout.classList.add("hidden");
+      if (viewAuth) viewAuth.classList.remove("hidden");
+    } else {
+      // User is logged in -> Hide Auth View, Show App Layout
+      if (viewAuth) viewAuth.classList.add("hidden");
+      if (appLayout) appLayout.classList.remove("hidden");
+      syncUserProfileUI();
+    }
+  }
+
+  function syncUserProfileUI() {
+    if (!currentUser) return;
+    const firstName = currentUser.fullName.split(" ")[0];
+
+    // Banner Greeting
+    const bannerName = document.getElementById("banner-user-name");
+    if (bannerName) bannerName.textContent = firstName;
+
+    // Sidebar Profile Footer
+    const sbName = document.getElementById("sidebar-user-name");
+    const sbRole = document.getElementById("sidebar-user-role");
+    const sbImg = document.getElementById("sidebar-user-avatar");
+    if (sbName) sbName.textContent = currentUser.fullName;
+    if (sbRole) sbRole.textContent = currentUser.role || "Admin";
+    if (sbImg && currentUser.avatar) sbImg.src = currentUser.avatar;
+
+    // Header Profile Chip & Dropdown
+    const hdImg = document.getElementById("header-user-avatar");
+    const ddName = document.getElementById("dropdown-user-name");
+    const ddEmail = document.getElementById("dropdown-user-email");
+    if (hdImg && currentUser.avatar) hdImg.src = currentUser.avatar;
+    if (ddName) ddName.textContent = currentUser.fullName;
+    if (ddEmail) ddEmail.textContent = currentUser.email;
+  }
+
+  // Auth Tab Switcher (Sign In vs Register)
+  const tabAuthLogin = document.getElementById("tab-auth-login");
+  const tabAuthReg = document.getElementById("tab-auth-register");
+  const panelAuthLogin = document.getElementById("auth-panel-login");
+  const panelAuthReg = document.getElementById("auth-panel-register");
+
+  if (tabAuthLogin && tabAuthReg) {
+    tabAuthLogin.addEventListener("click", () => {
+      tabAuthLogin.classList.add("active");
+      tabAuthReg.classList.remove("active");
+      panelAuthLogin.classList.add("active");
+      panelAuthReg.classList.remove("active");
+    });
+
+    tabAuthReg.addEventListener("click", () => {
+      tabAuthReg.classList.add("active");
+      tabAuthLogin.classList.remove("active");
+      panelAuthReg.classList.add("active");
+      panelAuthLogin.classList.remove("active");
+    });
+  }
+
+  // Form Sign In Submission
+  const formAuthLogin = document.getElementById("form-auth-login");
+  if (formAuthLogin) {
+    formAuthLogin.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("auth-login-email").value.trim().toLowerCase();
+      const pass = document.getElementById("auth-login-pass").value;
+
+      store = window.getStore();
+      const matchedUser = store.users.find((u) => u.email.toLowerCase() === email && u.password === pass);
+
+      if (matchedUser) {
+        window.setCurrentUser(matchedUser);
+        checkAuthSession();
+        navigateToView("dashboard");
+        showToast(`Welcome back, ${matchedUser.fullName}!`, "success");
+      } else {
+        showToast("Invalid email or password", "danger");
+      }
+    });
+  }
+
+  // Quick Demo Account Buttons
+  document.querySelectorAll(".demo-user-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const email = chip.getAttribute("data-user");
+      store = window.getStore();
+      const matchedUser = store.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+      if (matchedUser) {
+        window.setCurrentUser(matchedUser);
+        checkAuthSession();
+        navigateToView("dashboard");
+        showToast(`Signed in as ${matchedUser.fullName} (${matchedUser.role})`, "success");
+      }
+    });
+  });
+
+  // Form Register Submission
+  const formAuthReg = document.getElementById("form-auth-register");
+  if (formAuthReg) {
+    formAuthReg.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("auth-reg-name").value.trim();
+      const email = document.getElementById("auth-reg-email").value.trim().toLowerCase();
+      const pass = document.getElementById("auth-reg-pass").value;
+      const role = document.getElementById("auth-reg-role").value;
+      const avatar = document.getElementById("auth-reg-avatar").value;
+
+      store = window.getStore();
+      if (store.users.some((u) => u.email.toLowerCase() === email)) {
+        showToast("Account with this email already exists!", "warning");
+        return;
+      }
+
+      const newUser = {
+        id: `USR-${Date.now()}`,
+        fullName: name,
+        email: email,
+        password: pass,
+        role: role,
+        avatar: avatar,
+        phone: "+1 (555) 000-1122",
+        designation: role,
+        bio: `Account created for ${name}.`
+      };
+
+      store.users.unshift(newUser);
+      window.saveStore(store);
+      window.setCurrentUser(newUser);
+
+      checkAuthSession();
+      navigateToView("dashboard");
+      showToast(`Account created! Welcome, ${name}!`, "success");
+    });
+  }
 
   // ----------------------------------------------------
   // TOAST NOTIFICATION ENGINE
@@ -94,36 +237,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Hide all view sections
     viewSections.forEach((sec) => sec.classList.remove("active"));
-
-    // Activate target view
     const targetSection = document.getElementById(`view-${viewName}`);
-    if (targetSection) {
-      targetSection.classList.add("active");
-    }
+    if (targetSection) targetSection.classList.add("active");
 
-    // Update active nav link
     navItems.forEach((link) => {
-      if (link.getAttribute("data-view") === viewName) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
+      if (link.getAttribute("data-view") === viewName) link.classList.add("active");
+      else link.classList.remove("active");
     });
 
-    // Update Header Title
     if (headerPageTitle && pageTitles[viewName]) {
       headerPageTitle.textContent = pageTitles[viewName];
     }
 
-    // Close Mobile Sidebar
-    appSidebar.classList.remove("show-sidebar");
-
-    // Close Dropdowns
+    if (appSidebar) appSidebar.classList.remove("show-sidebar");
     closeAllDropdowns();
-
-    // Render Section Data
     renderViewData(viewName);
 
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -132,16 +260,13 @@ document.addEventListener("DOMContentLoaded", () => {
   navItems.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      const view = link.getAttribute("data-view");
-      navigateToView(view);
+      navigateToView(link.getAttribute("data-view"));
     });
   });
 
-  // Mobile menu open/close
   if (menuBtn) menuBtn.addEventListener("click", () => appSidebar.classList.add("show-sidebar"));
   if (closeBtn) closeBtn.addEventListener("click", () => appSidebar.classList.remove("show-sidebar"));
 
-  // Clickable shortcut widgets
   document.querySelectorAll(".clickable-widget").forEach((widget) => {
     widget.addEventListener("click", () => {
       const target = widget.getAttribute("data-target-view");
@@ -190,7 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
     profileDropdown.classList.add("hidden");
   }
 
-  // Notifications Toggle
   if (btnNotifToggle) {
     btnNotifToggle.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -242,7 +366,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   renderNotificationsList();
 
-  // Profile Dropdown Toggle
   if (profileTrigger) {
     profileTrigger.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -264,7 +387,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Global Header Search
   if (globalSearchInput) {
     globalSearchInput.addEventListener("input", (e) => {
       const query = e.target.value.trim().toLowerCase();
@@ -274,8 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       let results = [];
-
-      // Search Orders
       store.orders.forEach((ord) => {
         if (ord.productName.toLowerCase().includes(query) || ord.productNumber.includes(query) || ord.customer.toLowerCase().includes(query)) {
           results.push({
@@ -288,7 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Search Products
       store.products.forEach((prod) => {
         if (prod.name.toLowerCase().includes(query) || prod.sku.toLowerCase().includes(query) || prod.category.toLowerCase().includes(query)) {
           results.push({
@@ -304,7 +423,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Search Customers
       store.customers.forEach((cust) => {
         if (cust.name.toLowerCase().includes(query) || cust.email.toLowerCase().includes(query) || cust.location.toLowerCase().includes(query)) {
           results.push({
@@ -495,7 +613,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("cust-status-filter")?.addEventListener("change", renderCustomersView);
   document.getElementById("cust-tier-filter")?.addEventListener("change", renderCustomersView);
 
-  // Add Customer Modal
   document.getElementById("btn-add-customer")?.addEventListener("click", () => {
     openModal(`
       <h2>Add New Customer</h2>
@@ -1181,11 +1298,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 9. SETTINGS VIEW CONTROLLER
   function renderSettingsView() {
+    currentUser = window.getCurrentUser() || {};
+    if (currentUser) {
+      document.getElementById("set-fullname").value = currentUser.fullName || "John Doe";
+      document.getElementById("set-email").value = currentUser.email || "john.admin@dashboard.com";
+      document.getElementById("set-phone").value = currentUser.phone || "";
+      document.getElementById("set-role").value = currentUser.role || "Super Admin";
+      document.getElementById("set-bio").value = currentUser.bio || "";
+    }
     if (store.settings) {
-      document.getElementById("set-fullname").value = store.settings.fullName || "John Doe";
-      document.getElementById("set-email").value = store.settings.email || "john.admin@dashboard.com";
-      document.getElementById("set-phone").value = store.settings.phone || "";
-      document.getElementById("set-bio").value = store.settings.bio || "";
       document.getElementById("set-notif-email").checked = !!store.settings.emailNotifications;
       document.getElementById("set-notif-orders").checked = !!store.settings.orderAlerts;
       document.getElementById("set-notif-system").checked = !!store.settings.systemUpdates;
@@ -1206,20 +1327,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("form-profile-settings")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    store.settings.fullName = document.getElementById("set-fullname").value;
-    store.settings.email = document.getElementById("set-email").value;
-    store.settings.phone = document.getElementById("set-phone").value;
-    store.settings.bio = document.getElementById("set-bio").value;
+    if (!currentUser) return;
 
-    window.saveStore(store);
+    currentUser.fullName = document.getElementById("set-fullname").value;
+    currentUser.email = document.getElementById("set-email").value;
+    currentUser.phone = document.getElementById("set-phone").value;
+    currentUser.bio = document.getElementById("set-bio").value;
 
-    // Update Header Info
-    const firstName = store.settings.fullName.split(" ")[0];
-    document.getElementById("banner-user-name").textContent = firstName;
-    document.getElementById("sidebar-user-name").textContent = store.settings.fullName;
-    document.getElementById("dropdown-user-name").textContent = store.settings.fullName;
-    document.getElementById("dropdown-user-email").textContent = store.settings.email;
-
+    // Update in store users array
+    const userIndex = store.users.findIndex((u) => u.id === currentUser.id);
+    if (userIndex !== -1) {
+      store.users[userIndex] = currentUser;
+      window.saveStore(store);
+    }
+    window.setCurrentUser(currentUser);
+    syncUserProfileUI();
     showToast("Profile settings saved!", "success");
   });
 
@@ -1264,42 +1386,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 10. LOGOUT & LOCK SCREEN CONTROLLER
+  // 10. LOGOUT & SESSION CONTROL
   function handleLogoutPrompt() {
     openModal(`
       <div style="text-align:center; padding:1rem 0;">
-        <span class="material-icons-sharp" style="font-size:3.5rem; color:var(--color-warning);">lock</span>
-        <h2>Lock Screen Session</h2>
-        <p class="text-muted" style="margin:0.5rem 0 1.4rem;">Are you sure you want to sign out or lock your admin session?</p>
+        <span class="material-icons-sharp" style="font-size:3.5rem; color:var(--color-warning);">logout</span>
+        <h2>Sign Out of Account</h2>
+        <p class="text-muted" style="margin:0.5rem 0 1.4rem;">Are you sure you want to end your current session?</p>
         <div class="form-actions-flex" style="justify-content:center;">
           <button class="btn btn-outline" onclick="document.getElementById('global-modal').classList.add('hidden')">Cancel</button>
-          <button class="btn btn-primary" id="btn-confirm-logout">Lock & Sign Out</button>
+          <button class="btn btn-primary" id="btn-confirm-logout">Yes, Sign Out</button>
         </div>
       </div>
     `);
 
     document.getElementById("btn-confirm-logout")?.addEventListener("click", () => {
-      openModal(`
-        <div style="text-align:center; padding:1.5rem 0;">
-          <div class="profile-photo" style="width:5rem; height:5rem; margin:0 auto 1rem;">
-            <img src="images/image2.png" alt="Admin Avatar" />
-          </div>
-          <h2>Session Locked</h2>
-          <p class="text-muted" style="margin-bottom:1rem;">Enter PIN or click below to unlock session</p>
-          <input type="password" value="123456" style="width:80%; text-align:center; letter-spacing:4px; font-size:1.4rem; margin-bottom:1rem; padding:0.6rem; border-radius:0.6rem; border:1px solid var(--color-border); background:var(--color-background); color:var(--color-dark);" />
-          <br/>
-          <button class="btn btn-primary" id="btn-unlock-session">Unlock Admin Dashboard</button>
-        </div>
-      `);
-
-      document.getElementById("btn-unlock-session")?.addEventListener("click", () => {
-        closeModal();
-        navigateToView("dashboard");
-        showToast("Welcome back, John!", "success");
-      });
+      window.logoutUser();
+      closeModal();
+      checkAuthSession();
+      showToast("You have been signed out.", "info");
     });
   }
 
-  // INITIALIZE DEFAULT VIEW
-  navigateToView("dashboard");
+  // INITIALIZE APP AUTH STATE & DEFAULT VIEW
+  checkAuthSession();
+  if (window.getCurrentUser()) {
+    navigateToView("dashboard");
+  }
 });
